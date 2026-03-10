@@ -1,6 +1,6 @@
 body {
-  background-color: #e79ac2;
-  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #e79ac2, #ffcc80);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,48 +9,49 @@ body {
 }
 
 .chat-container {
+  width: 380px;
+  height: 640px;
+
   background: white;
   border-radius: 20px;
-  width: 900px;
-  height: 1600px;
+
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
+
 
 h1 {
   text-align: center;
   margin-bottom: 15px;
-  color: #ff0099;
+  color: #67244c;
 }
 
 .chat-box {
   flex: 1;
   overflow-y: auto;
-  margin-bottom: 10px;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid #ffe0b2;
   border-radius: 10px;
-  background-color: #fff8e1;
+  background-color: #0421df;
 }
 
 .message {
-  margin: 5px 0;
-  padding: 8px;
-  border-radius: 10px;
-  max-width: 80%;
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
   line-height: 1.4;
 }
 
 .user {
-  background-color: #fff3e0;
+  background: #ffe5cc;
   align-self: flex-end;
-  text-align: right;
 }
 
 .bot {
-  background-color: #e3f2fd;
+  background: #e6f0ff;
   align-self: flex-start;
 }
 

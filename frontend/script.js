@@ -77,3 +77,10 @@ userInput.addEventListener("keydown", (e) => {
 
 // initialize
 loadStoredMessages();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service_worker.js")
+      .then(() => console.log("Service Worker Registered"));
+  });
+}
