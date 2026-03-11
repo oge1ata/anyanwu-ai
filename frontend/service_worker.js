@@ -1,9 +1,5 @@
-// Name of the cache storage.
-// If we update files later, we can bump this version.
-const CACHE_NAME = "anyanwu-cache-v1";
+const CACHE_NAME = "anyanwu-cache-v3";
 
-// Files we want to store locally in the browser
-// so the app loads faster and works offline.
 const urlsToCache = [
   "/",
   "/index.html",
@@ -13,9 +9,11 @@ const urlsToCache = [
 ];
 
 
-// INSTALL EVENT
-// This runs when the service worker is first installed.
+// INSTALL
 self.addEventListener("install", (event) => {
+
+  self.skipWaiting();
+
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log("Caching app files");
@@ -25,19 +23,31 @@ self.addEventListener("install", (event) => {
 });
 
 
-// FETCH EVENT
-// Every network request goes through here.
+// ACTIVATE
+self.addEventListener("activate", (event) => {
+
+  event.waitUntil(clients.claim());
+
+});
+
+
+// FETCH
 self.addEventListener("fetch", (event) => {
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
+    fetch(event.request)
+      .then((response) => {
 
-      // If the file exists in cache, return it
-      if (response) {
+        const responseClone = response.clone();
+
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseClone);
+        });
+
         return response;
-      }
 
-      // Otherwise fetch it from the internet
-      return fetch(event.request);
-    })
+      })
+      .catch(() => caches.match(event.request))
   );
+
 });
