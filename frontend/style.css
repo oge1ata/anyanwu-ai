@@ -1,6 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── Reset & Base ────────────────────────────────────────────────────────────── */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: linear-gradient(120deg,#f7a1c4,#ffb47a);
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #0d0d0d;
+  /* Subtle diagonal grid pattern for depth */
+  background-image:
+    linear-gradient(rgba(224, 97, 150, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(224, 97, 150, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  font-family: 'Space Mono', monospace;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,131 +21,179 @@ body {
   margin: 0;
 }
 
+/* ── Chat container ──────────────────────────────────────────────────────────── */
+
 .chat-container {
   width: 90%;
-  max-width: 420px;
+  max-width: 440px;
   height: 90vh;
-  max-height: 700px;
+  max-height: 720px;
 
-  background: white;
-  border-radius: 20px;
+  background: #181818;
+  border: 1px solid #442342;
+  border-radius: 4px; /* Sharp corners — tech tool, not a toy */
 
   display: flex;
   flex-direction: column;
 
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  /* Pink glow — the "ominous" energy */
+  box-shadow:
+    0 0 0 1px #E0619620,
+    0 0 30px #E0619614,
+    0 0 60px #78309010;
 }
 
+/* ── Header ──────────────────────────────────────────────────────────────────── */
 
 h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  color: #FFC1EF;
   text-align: center;
-  padding: 16px;
+  padding: 18px 16px;
   margin: 0;
 
-  font-size: 22px;
-  font-weight: 600;
+  border-bottom: 1px solid #44234260;
 
-  border-bottom: 1px solid #eee;
+  /* Subtle text glow */
+  text-shadow: 0 0 20px #E0619650;
 }
+
+/* ── Chat messages area ──────────────────────────────────────────────────────── */
 
 .chat-box {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 20px 16px;
 
-  background: #f8f9fb;
+  background: #111111;
 
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+
+  /* Custom scrollbar to match the theme */
+  scrollbar-width: thin;
+  scrollbar-color: #44234280 transparent;
 }
 
+.chat-box::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-box::-webkit-scrollbar-thumb {
+  background: #442342;
+  border-radius: 2px;
+}
+
+/* ── Message bubbles ─────────────────────────────────────────────────────────── */
+
 .message {
-  max-width: 70%;
-  padding: 12px 14px;
-  border-radius: 16px;
-  line-height: 1.4;
-  font-size: 14px;
-  animation: fadeIn 0.2s ease;
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 2px;
+  line-height: 1.6;
+  font-size: 13px;
+  font-family: 'Space Mono', monospace;
+  animation: fadeIn 0.15s ease;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+/* User messages — right side, pink tint */
 .user {
-  background: #ffe2c7;
+  background: #2a1020;
+  border: 1px solid #E0619640;
+  color: #FFC1EF;
   align-self: flex-end;
 }
 
+/* Bot messages — left side, dark with subtle border */
 .bot {
-  background: #e4ebf5;
+  background: #1a1a1a;
+  border: 1px solid #44234260;
+  border-left: 2px solid #E06196;
+  color: #e8d0e8;
   align-self: flex-start;
 }
 
+/* System error messages — centered, muted */
 .system {
-  background: #f1f1f1;
+  background: transparent;
+  border: 1px solid #44234240;
+  color: #66334466;
+  font-size: 11px;
   align-self: center;
-  font-size: 13px;
+  text-align: center;
 }
+
+/* Sender label */
+.message strong {
+  color: #E06196;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ── Input area ──────────────────────────────────────────────────────────────── */
 
 .input-area {
   display: flex;
   padding: 12px;
-  border-top: 1px solid #eee;
-  background: white;
+  gap: 8px;
+  border-top: 1px solid #44234260;
+  background: #181818;
 }
 
 #user-input {
   flex: 1;
-  border-radius: 20px;
-  border: 1px solid #ddd;
+  background: #111111;
+  border: 1px solid #44234280;
+  border-radius: 2px;
   padding: 10px 14px;
-  font-size: 14px;
+  font-size: 13px;
+  font-family: 'Space Mono', monospace;
+  color: #FFC1EF;
+  caret-color: #E06196;
+  transition: border-color 0.2s;
+}
+
+#user-input::placeholder {
+  color: #44234280;
 }
 
 #user-input:focus {
   outline: none;
-  border-color: #ff8a00;
+  border-color: #E06196;
+  box-shadow: 0 0 10px #E0619620;
 }
 
 #send-btn {
-  margin-left: 10px;
-  padding: 10px 18px;
-
-  border: none;
-  border-radius: 18px;
-
-  background: #ff8a00;
-  color: white;
-  font-weight: 600;
-
+  padding: 10px 20px;
+  border: 1px solid #E06196;
+  border-radius: 2px;
+  background: transparent;
+  color: #E06196;
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
-
-/* input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ffcc80;
-  border-radius: 10px;
-}
-
-button {
-  background-color: #ff9800;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 15px;
-  cursor: pointer;
-} */
 
 #send-btn:hover {
-  background-color: #f57c00;
+  background: #E06196;
+  color: #181818;
+  box-shadow: 0 0 16px #E0619650;
 }
