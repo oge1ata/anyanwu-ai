@@ -9,8 +9,10 @@ body {
 }
 
 .chat-container {
-  width: 380px;
-  height: 640px;
+  width: 90%;
+  max-width: 420px;
+  height: 90vh;
+  max-height: 700px;
 
   background: white;
   border-radius: 20px;

@@ -1,3 +1,5 @@
+const BACKEND_URL = "http://127.0.0.1:8000"; // Change this for production
+
 const chatBox = document.getElementById("chat-box");
 const userInput = document.getElementById("user-input");
 const sendBtn = document.getElementById("send-btn");
@@ -34,7 +36,7 @@ async function sendMessage() {
   userInput.value = "";
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/chat", {
+    const response = await fetch(`${BACKEND_URL}/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +64,13 @@ async function sendMessage() {
 function appendMessage(sender, text, type, save = true) {
   const messageDiv = document.createElement("div");
   messageDiv.classList.add("message", type);
-  messageDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+
+  const label = document.createElement("strong");
+  label.textContent = `${sender}: `;
+  const content = document.createTextNode(text);
+  messageDiv.appendChild(label);
+  messageDiv.appendChild(content);
+
   chatBox.appendChild(messageDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -78,9 +86,18 @@ userInput.addEventListener("keydown", (e) => {
 // initialize
 loadStoredMessages();
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    // navigator.serviceWorker.register("service_worker.js")
-      // .then(() => console.log("Service Worker Registered"));
-  });
+// On every page load, check if Anyanwu queued any scheduled messages while the app was closed
+// (5am wake-up or 9pm check-in). They show up here in the chat automatically.
+async function checkScheduledMessages() {
+  try {
+    const response = await fetch(`${BACKEND_URL}/check-in`);
+    if (!response.ok) return;
+    const data = await response.json();
+    data.messages.forEach((msg) => appendMessage("Anyanwu ☀️", msg, "bot"));
+  } catch (e) {
+    // Backend not running — silently skip, don't clutter the UI
+  }
 }
+
+checkScheduledMessages();
+

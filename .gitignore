@@ -2,6 +2,7 @@ venv/
 ogenv/
 __pycache__/
 .env
+backend/data/memory.json
 *.pyc
 .DS_Store
 .idea/
