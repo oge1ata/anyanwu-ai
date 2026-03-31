@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ANYANWU — AI Coach</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/anyanwu_192.jpg">
-<meta name="theme-color" content="#181818">
+  <link rel="apple-touch-icon" href="icons/anyanwu_192.jpg">
+  <meta name="theme-color" content="#181818">
 </head>
+
 <body>
   <div class="chat-container">
     <h1>ANYANWU</h1>
     <div class="chat-box" id="chat-box"></div>
+    <div class="log-panel" id="log-panel">
+      <div class="log-header">TODAY'S LOG</div>
+      <div class="log-entries" id="log-entries"></div>
+      <div class="log-input-row">
+        <input id="log-input" type="text" placeholder="> what did you do..." />
+        <button id="log-add-btn">ADD</button>
+      </div>
+    </div>
+
     <div class="input-area">
       <input id="user-input" type="text" placeholder="> say something..." />
       <button id="send-btn">RUN</button>
+      <button id="log-btn">LOG</button>
     </div>
   </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>

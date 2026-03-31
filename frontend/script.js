@@ -101,3 +101,72 @@ async function checkScheduledMessages() {
 
 checkScheduledMessages();
 
+// ── Log panel ─────────────────────────────────────────────────────────────────
+
+const logBtn = document.getElementById("log-btn");
+const logPanel = document.getElementById("log-panel");
+const logEntries = document.getElementById("log-entries");
+const logInput = document.getElementById("log-input");
+const logAddBtn = document.getElementById("log-add-btn");
+
+function toggleLog() {
+  const isOpen = logPanel.classList.toggle("active");
+  chatBox.style.display = isOpen ? "none" : "flex";
+  logBtn.classList.toggle("active", isOpen);
+  if (isOpen) loadTodayLog();
+}
+
+async function loadTodayLog() {
+  const today = new Date().toISOString().split("T")[0];
+  logEntries.innerHTML = "";
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/log?day=${today}`);
+    if (!response.ok) throw new Error();
+    const data = await response.json();
+    const entries = data[today] || [];
+
+    if (entries.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "log-empty";
+      empty.textContent = "nothing logged yet today.";
+      logEntries.appendChild(empty);
+    } else {
+      entries.forEach((text) => {
+        const item = document.createElement("div");
+        item.className = "log-entry";
+        item.textContent = text;
+        logEntries.appendChild(item);
+      });
+    }
+  } catch {
+    const err = document.createElement("p");
+    err.className = "log-empty";
+    err.textContent = "couldn't load log. is the backend running?";
+    logEntries.appendChild(err);
+  }
+}
+
+async function addLogEntry() {
+  const text = logInput.value.trim();
+  if (!text) return;
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/log`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ entry: text }),
+    });
+    if (!response.ok) throw new Error();
+    logInput.value = "";
+    loadTodayLog();
+  } catch {
+    // silently fail — backend may not be running
+  }
+}
+
+logBtn.addEventListener("click", toggleLog);
+logAddBtn.addEventListener("click", addLogEntry);
+logInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addLogEntry();
+});
