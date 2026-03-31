@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://127.0.0.1:8000"; // Change this for production
+const BACKEND_URL = "https://anyanwu-ai.onrender.com"; // Change this for production
 
 const chatBox = document.getElementById("chat-box");
 const userInput = document.getElementById("user-input");

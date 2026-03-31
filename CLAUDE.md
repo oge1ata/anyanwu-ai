@@ -118,6 +118,33 @@ The daily log (`/log` endpoint) accumulates what the user has done each day. Thi
 
 ---
 
+## Current Status (March 2026)
+
+All features through Part 2 are complete. The activity log UI was the last feature before deployment. The project is now ready for Part 3.
+
+**What was just built (log UI):**
+- LOG button in the input bar (styled distinct from RUN — muted, brightens when active)
+- `.log-panel` that toggles in place of `.chat-box` — restores chat when closed
+- `loadTodayLog()` — calls `GET /log?day=YYYY-MM-DD`, renders entries or empty/error state
+- `addLogEntry()` — calls `POST /log`, clears input, re-renders list
+- Enter key works on log input
+
+**Roadmap status:**
+- [x] FastAPI backend + OpenAI integration
+- [x] Chat UI with localStorage persistence
+- [x] Conversation memory (500 msg rolling window)
+- [x] Daily scheduled reminders (5am + 9pm)
+- [x] Activity log backend (`/log` POST + GET)
+- [x] Activity log UI (LOG panel in the chat)
+- [ ] Deploy backend (Render) — **this is next**
+- [ ] Deploy frontend (Vercel / Netlify)
+- [ ] Real PWA — install prompt, home screen, standalone mode
+- [ ] Push notifications (requires HTTPS + deployed service worker)
+
+**For full detail on everything built:** see `PROJECT_OVERVIEW.md`
+
+---
+
 ## Part 3 Deployment Plan
 
 The goal is to take Anyanwu from `localhost` to a real accessible URL.

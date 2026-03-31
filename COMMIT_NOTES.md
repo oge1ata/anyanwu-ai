@@ -1,5 +1,52 @@
 # Commit Notes — What's in this commit (Major Changes)
 
+---
+
+## Log UI — Activity Panel (March 2026)
+
+### New LOG button in the input bar (`frontend/index.html`, `frontend/style.css`, `frontend/script.js`)
+The `/log` backend endpoint existed but had no UI. Added a full activity log panel that toggles in place of the chat window.
+
+**What was built:**
+- LOG button in the input area, visually distinct from RUN (muted pink, brightens when active)
+- Full `.log-panel` that slides in when LOG is toggled — replaces the chat box, restores it when closed
+- TODAY'S LOG header, a scrollable entry list, and a quick-add input with an ADD button
+- `loadTodayLog()` — calls `GET /log?day=YYYY-MM-DD` on panel open, renders entries
+- `addLogEntry()` — calls `POST /log`, clears the input, re-renders the list immediately
+- Empty state: "nothing logged yet today." message when no entries exist
+- Error state: graceful fallback if backend isn't running
+- Enter key works on the log input (same as chat)
+
+**Why this matters:** The 9pm check-in already reads from the daily log to give Anyanwu context. This gives the user a place to actually populate it from the UI, not just via API. It also builds toward the job-application record use case described in the Part 2 article.
+
+---
+
+## Daily Reminder System (March 2026 — previous commit)
+
+### Scheduler added (`backend/services/scheduler.py`)
+APScheduler runs two background jobs while FastAPI is live:
+- **5:00 AM** — queues "You should be up by now. What's the plan for today?"
+- **9:00 PM** — checks `daily_log.json` for today's entries and crafts a context-aware message. If nothing was logged, she calls that out. If things were logged, she asks what didn't get done.
+
+### Daily log service added (`backend/services/daily_log.py`)
+Manages two JSON files:
+- `daily_log.json` — dict keyed by date string, each entry is a list of activity strings
+- `pending_messages.json` — queue of scheduled messages waiting to be delivered
+
+`get_today_summary()` formats today's log into plain text that gets injected into Anyanwu's context at 9pm, so she already knows what you did and can ask about what's missing.
+
+### `/log` endpoints added (`backend/main.py`)
+- `POST /log` — adds an activity entry for today (with empty-string validation)
+- `GET /log` — returns full log or single day via `?day=YYYY-MM-DD`
+
+### `/check-in` endpoint added (`backend/main.py`)
+Called by the frontend on every page load. Returns pending scheduled messages and clears the queue so they only appear once.
+
+### Frontend polling added (`frontend/script.js`)
+`checkScheduledMessages()` runs on page load, fetches `/check-in`, and appends any pending messages to the chat as Anyanwu messages. Silently skips if the backend isn't running.
+
+---
+
 ## Security Fixes
 
 ### XSS vulnerability fixed (`frontend/script.js`)
