@@ -4,7 +4,7 @@
 
 Anyanwu is a personal AI coaching app built to push you forward — not comfort you in place. She's direct, warm, and relentless about forward motion. Not a chatbot. Not a therapist. A big sister who's been through it and tells it straight.
 
-Built and documented as a public series on Medium: [Part 1](https://medium.com/@yomacorp/️building-anyanwu-part-one-d53b445afb80) · [Part 2](https://medium.com/@yomacorp/️building-anyanwu-the-face-256cf4c7239a) · Part 3 (coming soon)
+Built and documented as a public series on Medium: [Part 1](https://medium.com/@yomacorp/️building-anyanwu-part-one-d53b445afb80) · [Part 2](https://medium.com/@yomacorp/️building-anyanwu-the-face-256cf4c7239a) · [Part 3](https://medium.com/@yomacorp/️-building-anyanwu-the-deployment-e0affa6da3e6)
 
 ---
 
